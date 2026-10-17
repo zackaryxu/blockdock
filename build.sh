@@ -30,9 +30,11 @@ cat > "$app/Contents/Info.plist" <<'PLIST'
 </dict></plist>
 PLIST
 codesign --force --sign - "$app"
+mkdir -p dist/assets
 cp README.md LICENSE THIRD_PARTY_NOTICES.md dist/
+cp assets/demo.png dist/assets/
 rm -f dist/BlockDock-macOS.zip
-(cd dist && /usr/bin/zip -qr BlockDock-macOS.zip BlockDock.app README.md LICENSE THIRD_PARTY_NOTICES.md)
+(cd dist && /usr/bin/zip -qr BlockDock-macOS.zip BlockDock.app README.md LICENSE THIRD_PARTY_NOTICES.md assets)
 rm -f dist/BlockDock-source.zip
-/usr/bin/zip -qr dist/BlockDock-source.zip Package.swift build.sh README.md LICENSE THIRD_PARTY_NOTICES.md Sources Tests -x '*/.DS_Store'
+/usr/bin/zip -qr dist/BlockDock-source.zip Package.swift build.sh README.md LICENSE THIRD_PARTY_NOTICES.md Sources Tests assets -x '*/.DS_Store'
 echo "Built $app, dist/BlockDock-macOS.zip and dist/BlockDock-source.zip"
